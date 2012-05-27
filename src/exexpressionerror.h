@@ -1,3 +1,9 @@
+/*
+ *  Author: Walter Roth, University of Applied Science Suedwestfalen, Germany
+ *  Copyright by Walter Roth 2012
+ *  License: GPL
+ */
+
 #ifndef EXEXPRESSIONERROR_H
 #define EXEXPRESSIONERROR_H
 

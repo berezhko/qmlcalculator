@@ -1,3 +1,9 @@
+/*
+ *  Author: Walter Roth, University of Applied Science Suedwestfalen, Germany
+ *  Copyright by Walter Roth 2012
+ *  License: GPL
+ */
+
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
@@ -9,6 +15,13 @@ namespace Ui {
     class MainWindow;
 }
 
+/**
+  * The Main window for a QWidget based Calculator GUI. Uses mainwindow.ui as GUI.
+  * NOT recommended for use on mobile devices. Use the QML GUI on mobile devices.
+  *
+  * This class was created to demonstrate the QWidget and QML capabilities of the
+  * calculator and plotter classes.
+  */
 class MainWindow : public QMainWindow
 {
     Q_OBJECT

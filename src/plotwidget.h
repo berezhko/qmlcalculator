@@ -1,3 +1,8 @@
+/*
+ *  Author: Walter Roth, University of Applied Science Suedwestfalen, Germany
+ *  Copyright by Walter Roth 2012
+ *  License: GPL
+ */
 #ifndef PLOTWIDGET_H
 #define PLOTWIDGET_H
 

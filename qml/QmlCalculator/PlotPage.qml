@@ -116,8 +116,8 @@ Tap on the white rectangle to show or hide a marker.")
             }
         }
         Grid{ id: buttonGrid
-            columns: (screen.currentOrientation == Screen.Portrait) ? 3 : 5
-            rows: (screen.currentOrientation == Screen.Portrait) ? 5 : 3
+            columns: (screen.currentOrientation === Screen.Portrait) ? 3 : 5
+            rows: (screen.currentOrientation === Screen.Portrait) ? 5 : 3
             spacing: 8
             width: parent.width
             property int buttonWidth: (width - (columns -1) * spacing) / columns

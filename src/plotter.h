@@ -1,3 +1,9 @@
+/*
+ *  Author: Walter Roth, University of Applied Science Suedwestfalen, Germany
+ *  Copyright by Walter Roth 2012
+ *  License: GPL
+ */
+
 #ifndef PLOTTER_H
 #define PLOTTER_H
 
@@ -7,7 +13,8 @@
 #include <QFont>
 
 /** A plotter to be used with an activated QPainter. May be run in a QML or a QWidget environment.
-  * The following plotter commands are supported:
+  * Plooting is controlled by the processPlotCommand function, which takes the command as a QString.
+  * The following plotter command strings are supported:
   * Scaling of the Y-axis: Y=f(x)    Y=ln(f(x))     Y=1/f(x)
   * Scaling of the X axis: X=x       X=ln(x)        X=1/x
   * X-Range:               From x=   To x=          Dx=
@@ -52,6 +59,10 @@ public:
     void setFontFamily(const QString & newFont){font.setFamily( newFont);}
     int getFontSize(){return font.pixelSize();}
     void setFontSize(int newSize){font.setPixelSize(newSize); autoFontSize = false;}
+    /**
+      * Returns true, if plot data are available.
+      */
+    bool hasPlot(){return pointsF.size() > 0;}
 signals:
     /**
       * Sent whenever the setup was modified.

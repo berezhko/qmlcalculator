@@ -436,7 +436,7 @@ void Plotter::drawXAxis(QPainter * painter)
     painter->drawLine(left, originPix.y(), right, originPix.y());
 
     QPoint tick = QPoint(0, tickLength);
-    QPoint textSize = QPoint(0, painter->fontMetrics().height());
+    QPoint textSize = QPoint(0, painter->fontMetrics().ascent());
     int nTicks = 2;
     if(axisModeX == Linear)
     {
@@ -483,7 +483,7 @@ void Plotter::drawYAxis(QPainter * painter)
             QPoint pointTick2 = pointTick - tick;
             painter->drawLine(pointTick, pointTick2);
             QString text = QString::number(pointF.y());
-            textSize = QPoint(painter->fontMetrics().boundingRect(text).width(), 0);
+            textSize = QPoint(painter->fontMetrics().boundingRect(text).width(), 1); // 1 pixel up for readability
             QPoint pointText = pointTick2 - textSize;
             painter->drawText(pointText, text);
         }

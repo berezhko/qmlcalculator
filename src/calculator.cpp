@@ -581,8 +581,7 @@ void Calculator::parseSubexpression(QStringList & expressionParts)
     */
   void  Calculator::slot_Plotter_plotSetupChanged(QString plotSetup)
   {
-      createPlot();
-      emit plotSetupChanged("y=" + m_ExpressionText + " " + plotSetup);
+      createPlot();//emits plotSetupChanged with new plot setup values from plotter
   }
 
   /**
@@ -918,12 +917,16 @@ void Calculator::setAngleMode(const QString & newMode)
     {
         m_AngleMode = m_TextRad;
         m_NextAngleMode = m_TextDeg;
+        if(isPlotExpression() && plotter.hasPlot())
+            createPlot();
         emit angleModeChanged(m_AngleMode, m_NextAngleMode);
     }
     else if(newMode == m_TextDeg)
     {
         m_AngleMode = m_TextDeg;
         m_NextAngleMode = m_TextRad;
+        if(isPlotExpression() && plotter.hasPlot())
+            createPlot();
         emit angleModeChanged(m_AngleMode, m_NextAngleMode);
     }
     else errorMessage("Error", "Unknown angle mode: " + newMode);
