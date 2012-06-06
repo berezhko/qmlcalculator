@@ -50,7 +50,7 @@ PageStackWindow { id: appWindow
         border.color: mainPage.borderColor
 
         function plot(painter, plotRect){
-           // console.log("plot requested")
+            console.log("plot requested")
             calculator.plot(painter, plotRect)
         }
 
@@ -84,16 +84,16 @@ PageStackWindow { id: appWindow
 
             function switchState(state){
                 console.log("State requested: " + state)
-                if(state == "Plot"){
+                if(state === "Plot"){
                     appWindow.pageStack.push(plotPage)
                     messageBox.visualParent = plotPage
                  }
                 else {
-                    if(state == "Functions")
+                    if(state === "Functions")
                         mainFrame.state = "Functions"
-                    else if(state =="Standard")
+                    else if(state ==="Standard")
                         mainFrame.state = ""
-                    else if(state =="PlotError")
+                    else if(state ==="PlotError")
                     {
                         mainFrame.state = ""
                         messageBox.returnToPlotPage = true
@@ -198,18 +198,17 @@ PageStackWindow { id: appWindow
                         font.family: mainPage.fontFamily
                         font.pixelSize: mainPage.fontSize
                         horizontalAlignment: Text.AlignRight
-                        anchors.bottom: parent.bottom
+                        anchors.verticalCenter: parent.verticalCenter
                         anchors.right: parent.right
                         anchors.rightMargin: 3
-                        anchors.bottomMargin: 4
-                    }
+                   }
                 }
             }
 
             Grid{ //the buttons layout
                 id: grid
-                columns: (screen.currentOrientation == Screen.Portrait) ? 4 : 7
-                rows: (screen.currentOrientation == Screen.Portrait) ? 5 : 3
+                columns: (screen.currentOrientation === Screen.Portrait) ? 4 : 7
+                rows: (screen.currentOrientation === Screen.Portrait) ? 5 : 3
                 spacing: 8
                 width: parent.width
                 property int buttonWidth: (width - (columns -1) * spacing) / columns
@@ -494,11 +493,11 @@ PageStackWindow { id: appWindow
         onPageRequest: {
             console.log("pageRequest:" + page)
             appWindow.pageStack.pop()
-            if(page == qsTr("Fn"))
+            if(page === qsTr("Fn"))
                 mainFrame.state = "Functions"
-            else if(page =="Plot")
+            else if(page ==="Plot")
                 mainFrame.state = "Plot"
-            else if(page =="Std")
+            else if(page ==="Std")
                 mainFrame.state = ""
         }
     }//end plotPage

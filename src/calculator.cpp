@@ -40,7 +40,6 @@ const QString & Calculator::expressionText()
   */
 void Calculator::addToExpressionText(const QString & buttonText)
 {
-    // QStringList  expressionParts;
     QString text = buttonText;
     try{
         if(text == "C")
@@ -168,7 +167,12 @@ void Calculator::addOperator(const QString & operatorName)
             }
             m_ExpressionParts.append(operatorName);
         }
-        else return; //this is the very first input, do not allow an operator here
+        else //this is the very first input, do not allow an operator other than - here
+        {
+            if(operatorName == "-")
+               m_ExpressionParts.append(operatorName);
+            else return; //just ignore illegal operators
+        }
     }
 }
 
@@ -366,6 +370,8 @@ void Calculator::parseSubexpression(QStringList & expressionParts)
       else if(expressionParts[parenthesisPos]== ")"){
           throw ExExpressionError(tr("Parenthesis syntax error."));
       }
+  if(expressionParts.size() < 2) //evaluation is complete, we had a (Expression)
+      return;
   //now we have all function arguments directly behind the function name
   if(!(isNumber(expressionParts.last()) || isVariable(expressionParts.last())))
           throw ExExpressionError(tr("Last term of expression must be a number."));
@@ -375,8 +381,8 @@ void Calculator::parseSubexpression(QStringList & expressionParts)
           evaluateFunction(expressionParts, functionLine);
   while(operatorLine < expressionParts.size() &&! isOperator(expressionParts[operatorLine]))
         operatorLine ++;
-  if(!operatorLine >= expressionParts.size() - 1) //no operator, invalid expression or nothing to be done
-     return; //do nothing
+  if(operatorLine >= expressionParts.size() - 1) //no operator, invalid expression or nothing to be done
+      throw ExExpressionError(tr("Missing operator."));
 
   //we found an operator, now search for the first operator with highest priority
   prioLine = operatorLine;
@@ -391,8 +397,17 @@ void Calculator::parseSubexpression(QStringList & expressionParts)
     }
   }
   //Now lets calculate
-  if(operatorLine < 1)
-      throw ExExpressionError(tr("No operator allowed in first position."));
+  if(operatorLine < 1) //we have a leading operator
+  {
+   if(expressionParts[operatorLine] == "-" | expressionParts[operatorLine] == "+") //we have a sign
+   {
+       if(expressionParts[operatorLine] == "-")
+         expressionParts[0] = expressionParts[0] + expressionParts[1]; //make a negative number
+       expressionParts.removeAt(1); //and delete the sign from list
+       return;
+   }
+   else throw ExExpressionError(tr("No operator allowed in first position."));
+  }
   calculateSubExpression(expressionParts, operatorLine);
 }
 
